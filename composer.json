@@ -2,7 +2,7 @@
     "name": "bolt/Disqus",
     "description": "",
     "type": "bolt-extension",
-    "keywords": [],
+    "keywords": ["disqus", "comments"],
     "require": {
         "bolt/bolt": ">1.0,<2.0.0"
     },
