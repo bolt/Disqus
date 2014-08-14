@@ -27,6 +27,12 @@ class Extension extends \Bolt\BaseExtension
 
     }
 
+    public function getName()
+    {
+        return "Disqus";
+    }
+
+
     function initialize()
     {
 
@@ -37,8 +43,7 @@ class Extension extends \Bolt\BaseExtension
 
     }
 
-
-function disqus($title="")
+    function disqus($title="")
     {
 
         $html = <<< EOM
