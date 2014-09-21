@@ -1,5 +1,5 @@
 {
-    "name": "bolt/Disqus",
+    "name": "bolt/disqus",
     "description": "",
     "type": "bolt-extension",
     "keywords": ["disqus", "comments"],
