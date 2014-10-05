@@ -7,26 +7,6 @@ use Bolt\Extensions\Snippets\Location as SnippetLocation;
 
 class Extension extends \Bolt\BaseExtension
 {
-    function info()
-    {
-
-        $data = array(
-            'name' =>"Disqus",
-            'description' => "An extension to place Disqus comment threads on your site, when using <code>{{ disqus() }}</code> in your templates.",
-            'author' => "Bob den Otter",
-            'link' => "http://bolt.cm",
-            'version' => "1.2",
-            'required_bolt_version' => "1.0",
-            'highest_bolt_version' => "1.0",
-            'type' => "Twig function",
-            'first_releasedate' => "2012-10-10",
-            'latest_releasedate' => "2013-01-28",
-        );
-
-        return $data;
-
-    }
-
     public function getName()
     {
         return "Disqus";
