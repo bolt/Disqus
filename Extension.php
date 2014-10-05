@@ -12,27 +12,23 @@ class Extension extends \Bolt\BaseExtension
         return "Disqus";
     }
 
-
-    function initialize()
+    public function initialize()
     {
-
         $this->addTwigFunction('disqus', 'disqus');
         $this->addTwigFunction('disquslink', 'disquslink');
 
         if (empty($this->config['disqus_name'])) { $this->config['disqus_name'] = "No name set"; }
-
     }
 
-    function disqus($title="")
+    public function disqus($title="")
     {
-
         $html = <<< EOM
         <div id="disqus_thread"></div>
         <script type="text/javascript">
             var disqus_shortname = '%shortname%';
             %title%var disqus_url = '%url%';
 
-            (function() {
+            (function () {
                 var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
                 dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
                 (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
@@ -54,12 +50,9 @@ EOM;
         $html = str_replace("%title%", $title, $html);
 
         return new \Twig_Markup($html, 'UTF-8');
-
     }
 
-
-
-    function disquslink($link)
+    public function disquslink($link)
     {
 
         $script = <<< EOM
@@ -85,14 +78,6 @@ EOM;
         $html = str_replace("%link%", $link, $html);
 
         return new \Twig_Markup($html, 'UTF-8');
-
     }
 
-
 }
-
-
-
-
-
-
