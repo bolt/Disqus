@@ -1,58 +1,34 @@
 <?php
 // Disqus comment thread Extension for Bolt
 
-namespace Disqus;
+namespace Bolt\Extension\Bolt\Disqus;
 
 use Bolt\Extensions\Snippets\Location as SnippetLocation;
 
 class Extension extends \Bolt\BaseExtension
 {
-    function info()
-    {
-
-        $data = array(
-            'name' =>"Disqus",
-            'description' => "An extension to place Disqus comment threads on your site, when using <code>{{ disqus() }}</code> in your templates.",
-            'author' => "Bob den Otter",
-            'link' => "http://bolt.cm",
-            'version' => "1.2",
-            'required_bolt_version' => "1.0",
-            'highest_bolt_version' => "1.0",
-            'type' => "Twig function",
-            'first_releasedate' => "2012-10-10",
-            'latest_releasedate' => "2013-01-28",
-        );
-
-        return $data;
-
-    }
-
     public function getName()
     {
         return "Disqus";
     }
 
-
-    function initialize()
+    public function initialize()
     {
-
         $this->addTwigFunction('disqus', 'disqus');
         $this->addTwigFunction('disquslink', 'disquslink');
 
         if (empty($this->config['disqus_name'])) { $this->config['disqus_name'] = "No name set"; }
-
     }
 
-    function disqus($title="")
+    public function disqus($title="")
     {
-
         $html = <<< EOM
         <div id="disqus_thread"></div>
         <script type="text/javascript">
             var disqus_shortname = '%shortname%';
             %title%var disqus_url = '%url%';
 
-            (function() {
+            (function () {
                 var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
                 dsq.src = 'https://' + disqus_shortname + '.disqus.com/embed.js';
                 (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
@@ -74,12 +50,9 @@ EOM;
         $html = str_replace("%title%", $title, $html);
 
         return new \Twig_Markup($html, 'UTF-8');
-
     }
 
-
-
-    function disquslink($link)
+    public function disquslink($link)
     {
 
         $script = <<< EOM
@@ -105,14 +78,6 @@ EOM;
         $html = str_replace("%link%", $link, $html);
 
         return new \Twig_Markup($html, 'UTF-8');
-
     }
 
-
 }
-
-
-
-
-
-
