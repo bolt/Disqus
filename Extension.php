@@ -1,7 +1,7 @@
 <?php
 // Disqus comment thread Extension for Bolt
 
-namespace Disqus;
+namespace Bolt\Extension\Bolt\Disqus;
 
 use Bolt\Extensions\Snippets\Location as SnippetLocation;
 
