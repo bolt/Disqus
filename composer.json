@@ -1,6 +1,6 @@
 {
     "name": "bolt/disqus",
-    "description": "",
+    "description": "The 'Disqus' extension inserts a Disqus comment thread in your templates.",
     "type": "bolt-extension",
     "keywords": ["disqus", "comments"],
     "require": {
