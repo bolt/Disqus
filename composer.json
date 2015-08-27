@@ -20,5 +20,8 @@
         "psr-4": {
             "Bolt\\Extension\\Bolt\\Disqus\\": ""
         }
+    },
+    "extra": {
+        "bolt-icon": "assets/disqus.png"
     }
 }
