@@ -4,7 +4,7 @@
     "type": "bolt-extension",
     "keywords": ["disqus", "comments"],
     "require": {
-        "bolt/bolt": ">=2.0.0,<3.0.0"
+        "bolt/bolt": "^3.0"
     },
     "license": "MIT",
     "authors": [
@@ -14,14 +14,13 @@
         }
     ],
     "autoload": {
-        "files": [
-            "init.php"
-        ],
         "psr-4": {
-            "Bolt\\Extension\\Bolt\\Disqus\\": ""
+            "Bolt\\Extension\\Bolt\\Disqus\\": "src"
         }
     },
     "extra": {
-        "bolt-icon": "assets/disqus.png"
+        "bolt-icon": "web/disqus.png",
+        "bolt-assets": "web",
+        "bolt-class": "Bolt\\Extension\\Bolt\\Disqus\\DisqusExtension"
     }
 }

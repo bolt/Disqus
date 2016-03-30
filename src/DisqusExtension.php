@@ -3,25 +3,25 @@
 
 namespace Bolt\Extension\Bolt\Disqus;
 
-use Bolt\Extensions\Snippets\Location as SnippetLocation;
+use Bolt\Asset\Snippet\Snippet;
+use Bolt\Asset\Target;
+use Bolt\Extension\SimpleExtension;
 
-class Extension extends \Bolt\BaseExtension
+class DisqusExtension extends SimpleExtension
 {
-    public function getName()
+    protected function registerTwigFunctions()
     {
-        return "Disqus";
-    }
-
-    public function initialize()
-    {
-        $this->addTwigFunction('disqus', 'disqus');
-        $this->addTwigFunction('disquslink', 'disquslink');
-
-        if (empty($this->config['disqus_name'])) { $this->config['disqus_name'] = "No name set"; }
+        return [
+            'disqus' => 'disqus',
+            'disquslink' => 'disquslink',
+        ];
     }
 
     public function disqus($title="")
     {
+        $config = $this->getConfig();
+        $app = $this->getContainer();
+
         $html = <<< EOM
         <div id="disqus_thread"></div>
         <script type="text/javascript">
@@ -38,15 +38,14 @@ class Extension extends \Bolt\BaseExtension
         <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
 EOM;
-
         if ($title!="") {
             $title = "var disqus_title = '" . htmlspecialchars($title, ENT_QUOTES, "UTF-8") . "';\n";
         } else {
             $title = "";
         }
 
-        $html = str_replace("%shortname%", $this->config['disqus_name'], $html);
-        $html = str_replace("%url%", $this->app['paths']['canonicalurl'], $html);
+        $html = str_replace("%shortname%", $config['disqus_name'], $html);
+        $html = str_replace("%url%", $app['resources']->getUrl('canonicalurl'), $html);
         $html = str_replace("%title%", $title, $html);
 
         return new \Twig_Markup($html, 'UTF-8');
@@ -54,6 +53,8 @@ EOM;
 
     public function disquslink($link)
     {
+        $config = $this->getConfig();
+        $app = $this->getContainer();
 
         $script = <<< EOM
 <script type="text/javascript">
@@ -67,17 +68,23 @@ s.src = 'https://' + disqus_shortname + '.disqus.com/count.js';
 </script>
 
 EOM;
+        $script = str_replace("%shortname%", $config['disqus_name'], $script);
 
-        $script = str_replace("%shortname%", $this->config['disqus_name'], $script);
-
-        $this->addSnippet(SnippetLocation::END_OF_BODY, $script);
+        $asset = new Snippet();
+        $asset->setCallback($script)
+            ->setLocation(Target::END_OF_BODY);
+        $app['asset.queue.snippet']->add($asset);
 
         $html = '%hosturl%%link%#disqus_thread';
-
-        $html = str_replace("%hosturl%", $this->app['paths']['hosturl'], $html);
+        $html = str_replace("%hosturl%", $app['resources']->getUrl('hosturl'), $html);
         $html = str_replace("%link%", $link, $html);
 
         return new \Twig_Markup($html, 'UTF-8');
+    }
+
+    protected function getDefaultConfig()
+    {
+        return ['disqus_name' => 'boltcm'];
     }
 
 }
