@@ -6,6 +6,7 @@ namespace Bolt\Extension\Bolt\Disqus;
 use Bolt\Asset\Snippet\Snippet;
 use Bolt\Asset\Target;
 use Bolt\Extension\SimpleExtension;
+use Bolt\Version;
 
 class DisqusExtension extends SimpleExtension
 {
@@ -44,8 +45,14 @@ EOM;
             $title = "";
         }
 
+        if ((version_compare(Version::forComposer(), 3.2, '>='))) {
+            $canonical = $app['canonical']->getUrl();
+        } else {
+            $canonical = $app['resources']->getUrl('canonicalurl');
+        }
+
         $html = str_replace("%shortname%", $config['disqus_name'], $html);
-        $html = str_replace("%url%", $app['resources']->getUrl('canonicalurl'), $html);
+        $html = str_replace("%url%", $canonical, $html);
         $html = str_replace("%title%", $title, $html);
 
         return new \Twig_Markup($html, 'UTF-8');
