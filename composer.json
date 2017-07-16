@@ -21,6 +21,9 @@
     "extra": {
         "bolt-icon": "web/disqus.png",
         "bolt-assets": "web",
-        "bolt-class": "Bolt\\Extension\\Bolt\\Disqus\\DisqusExtension"
+        "bolt-class": "Bolt\\Extension\\Bolt\\Disqus\\DisqusExtension",
+        "branch-alias": {
+            "dev-master": "3.0.x-dev"
+        }
     }
 }
